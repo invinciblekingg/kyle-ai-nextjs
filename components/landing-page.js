@@ -2,10 +2,22 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import CountUp from "./count-up";
 import DemoModal from "./demo-modal";
 import Navbar from "./navbar";
 import Reveal from "./reveal";
-import { footerLinks, howItWorks, pricingPlans, products, proofStats, suiteMetrics, testimonials } from "../lib/site-data";
+import {
+  footerLinks,
+  heroSignals,
+  howItWorks,
+  liveActivity,
+  pricingPlans,
+  products,
+  proofStats,
+  suiteMetrics,
+  systemInsights,
+  testimonials,
+} from "../lib/site-data";
 
 function Icon({ name }) {
   if (name === "analytics") {
@@ -77,8 +89,11 @@ function Icon({ name }) {
 function ProductCard({ product }) {
   return (
     <Link className="product-card" href={`/platform/${product.id}`}>
-      <div className="product-icon" style={{ background: product.iconBg, color: product.iconColor }}>
-        <Icon name={product.icon} />
+      <div className="product-card-top">
+        <div className="product-icon" style={{ background: product.iconBg, color: product.iconColor }}>
+          <Icon name={product.icon} />
+        </div>
+        <span className="product-chip">Module</span>
       </div>
       <h3>{product.name}</h3>
       <p className="card-desc">{product.desc}</p>
@@ -88,15 +103,94 @@ function ProductCard({ product }) {
         ))}
       </ul>
       <span className="product-link" style={{ color: product.iconColor }}>
-        Explore {product.name} →
+        Explore {product.name}
       </span>
     </Link>
   );
 }
 
+function LiveActivityStrip() {
+  return (
+    <div className="activity-strip">
+      <div className="activity-strip-label">
+        <span className="section-kicker">Live activity</span>
+        <strong>Signals moving through the system right now</strong>
+      </div>
+      <div className="activity-marquee">
+        {liveActivity.concat(liveActivity).map((item, index) => (
+          <article className="activity-pill" key={`${item.title}-${index}`}>
+            <span>{item.time}</span>
+            <strong>{item.title}</strong>
+            <p>{item.detail}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function HeroVisual() {
+  return (
+    <div className="hero-visual">
+      <div className="visual-grid" />
+      <div className="visual-orb visual-orb-a" />
+      <div className="visual-orb visual-orb-b" />
+      <div className="visual-card system-card">
+        <div className="visual-card-header">
+          <div>
+            <span className="section-kicker">System in motion</span>
+            <strong>Data is flowing across the operating layer</strong>
+          </div>
+          <span className="status-pill">Live</span>
+        </div>
+
+        <div className="system-flow">
+          <div className="flow-node">
+            <span>01</span>
+            <strong>Sources</strong>
+            <p>38 connected inputs</p>
+          </div>
+          <div className="flow-line" />
+          <div className="flow-node active">
+            <span>02</span>
+            <strong>AI Layer</strong>
+            <p>Recommendations updating</p>
+          </div>
+          <div className="flow-line" />
+          <div className="flow-node">
+            <span>03</span>
+            <strong>Actions</strong>
+            <p>14 optimizations queued</p>
+          </div>
+        </div>
+
+        <div className="insight-stack">
+          <div className="insight-panel accent">
+            <strong>AI suggestion</strong>
+            <p>Optimize Route B for 12% efficiency and reduce idle time by 18 minutes.</p>
+          </div>
+          <div className="insight-panel">
+            <strong>Routing state</strong>
+            <p>Live handoff complete. The board and workflow views are synced.</p>
+          </div>
+        </div>
+
+        <div className="hero-signal-grid">
+          {heroSignals.map((signal) => (
+            <div key={signal.label} className="signal-card">
+              <span>{signal.label}</span>
+              <strong>{signal.value}</strong>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function LandingPage() {
   const [demoOpen, setDemoOpen] = useState(false);
-  const heroBars = useMemo(() => [45, 60, 55, 72, 65, 80, 88, 78, 95, 85, 70, 92], []);
+  const heroBars = useMemo(() => [42, 58, 54, 68, 64, 79, 86, 74, 92, 84, 70, 90], []);
 
   return (
     <>
@@ -114,7 +208,7 @@ export default function LandingPage() {
               </h1>
               <p className="hero-text">
                 Unify data. Predict what converts. Execute with AI. Kyle.ai is a single operating system where every
-                module works in concert, so insights from one area automatically inform actions in another.
+                module works in concert, so signals become actions without the usual manual handoff.
               </p>
               <div className="hero-actions">
                 <button type="button" className="primary-button" onClick={() => setDemoOpen(true)}>
@@ -134,74 +228,39 @@ export default function LandingPage() {
 
               <ul className="hero-metrics">
                 <li>
-                  <strong>4.72x</strong>
+                  <strong>
+                    <CountUp value={4.72} suffix="x" decimals={2} />
+                  </strong>
                   <span>Blended ROAS</span>
                 </li>
                 <li>
-                  <strong>$284K</strong>
+                  <strong>
+                    <CountUp value={284} prefix="$" suffix="K" />
+                  </strong>
                   <span>Ad spend on track</span>
                 </li>
                 <li>
-                  <strong>72%</strong>
+                  <strong>
+                    <CountUp value={72} suffix="%" />
+                  </strong>
                   <span>Identity match rate</span>
                 </li>
                 <li>
-                  <strong>2</strong>
+                  <strong>
+                    <CountUp value={2} />
+                  </strong>
                   <span>Review-needed anomalies</span>
                 </li>
               </ul>
             </Reveal>
 
-            <Reveal className="hero-panel" delay={100}>
-              <div className="orb orb-a" />
-              <div className="orb orb-b" />
-              <div className="glass-card hero-dashboard">
-                <div className="panel-header">
-                  <span>app.kyle.ai/growthlab</span>
-                  <span className="badge">Live system</span>
-                </div>
-                <div className="score-ring">
-                  <div className="ring-meter">
-                    <svg viewBox="0 0 120 120" aria-hidden="true">
-                      <circle cx="60" cy="60" r="46" className="ring-base" />
-                      <circle cx="60" cy="60" r="46" className="ring-progress" />
-                    </svg>
-                    <div className="ring-label">
-                      <strong>87</strong>
-                      <span>Health score</span>
-                    </div>
-                  </div>
-                  <div className="signal-grid">
-                    <article>
-                      <span>Forecast</span>
-                      <strong>$3.2M</strong>
-                    </article>
-                    <article>
-                      <span>Anomalies</span>
-                      <strong>2</strong>
-                    </article>
-                    <article>
-                      <span>Identity match</span>
-                      <strong>72%</strong>
-                    </article>
-                    <article>
-                      <span>Recovery</span>
-                      <strong>86</strong>
-                    </article>
-                  </div>
-                </div>
-                <div className="chart-card">
-                  <div className="chart-label">Weekly Revenue vs Forecast</div>
-                  <div className="chart-bars">
-                    {heroBars.map((bar, index) => (
-                      <span key={index} style={{ height: `${bar}%` }} />
-                    ))}
-                  </div>
-                </div>
-              </div>
+            <Reveal className="hero-panel" delay={80}>
+              <HeroVisual />
             </Reveal>
           </div>
         </section>
+
+        <LiveActivityStrip />
 
         <section className="proof-strip">
           <Reveal>
@@ -221,8 +280,8 @@ export default function LandingPage() {
             <span className="section-kicker">Product Suite</span>
             <h2>An Integrated Suite, Not a Collection of Tools</h2>
             <p>
-              Unlike siloed solutions, Kyle.ai is a single operating system where every module works in concert. The
-              result is a tighter flywheel from data, to insight, to action.
+              Kyle.ai is designed like an operating system. Every module feeds the next, so the UI feels connected,
+              intelligent, and alive.
             </p>
           </Reveal>
 
@@ -245,11 +304,30 @@ export default function LandingPage() {
             {howItWorks.map((step, index) => (
               <Reveal key={step.step} delay={index * 80}>
                 <div className="step-card">
-                  <div className="step-num">{step.step}</div>
-                  <div className="step-icon">{step.icon === "link" ? "🔗" : step.icon === "brain" ? "🧠" : "🚀"}</div>
+                  <div className="step-num">0{step.step}</div>
+                  <div className="step-icon">{step.icon === "link" ? "Link" : step.icon === "brain" ? "AI" : "Ship"}</div>
                   <h3>{step.title}</h3>
                   <p>{step.copy}</p>
                 </div>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        <section className="section-block">
+          <Reveal className="section-heading">
+            <h2>Deep Feature Cards Built for Real SaaS Workflows</h2>
+            <p>Hover states, soft gradients, and layered cards make the system feel premium without becoming noisy.</p>
+          </Reveal>
+
+          <div className="metrics-grid system-metrics">
+            {systemInsights.map((insight, index) => (
+              <Reveal key={insight} delay={index * 60}>
+                <article className="feature-card highlight-card">
+                  <span className="feature-index">0{index + 1}</span>
+                  <h3>{index === 0 ? "AI Workflows" : index === 1 ? "Auto Routing" : "Connected Actions"}</h3>
+                  <p>{insight}</p>
+                </article>
               </Reveal>
             ))}
           </div>
@@ -317,7 +395,7 @@ export default function LandingPage() {
             <div className="cta-banner">
               <div>
                 <h3>Ready to see the operating system in action?</h3>
-                <p>Book a demo and we’ll wire the request through the backend so the workflow is actually live.</p>
+                <p>Book a demo and we will wire the request through the backend so the workflow is actually live.</p>
               </div>
               <button type="button" className="primary-button" onClick={() => setDemoOpen(true)}>
                 Book a Demo

@@ -106,12 +106,20 @@ export default function ProductPage({ product }) {
               <p className="micro-note">No credit card required.</p>
             </div>
 
-            <div className="glass-card stat-card">
+            <div className="glass-card stat-card product-stat">
               <span className="section-kicker">{product.stat.label}</span>
               <h2 className="gradient-value" style={{ backgroundImage: product.gradientCSS }}>
                 {product.stat.value}
               </h2>
               <p>{product.stat.desc}</p>
+              <div className="product-stat-grid">
+                {product.metrics.slice(0, 3).map((metric) => (
+                  <div key={metric} className="product-stat-item">
+                    <strong>{metric}</strong>
+                    <span>system metric</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </Reveal>
         </section>
@@ -119,17 +127,20 @@ export default function ProductPage({ product }) {
         <section id="features" className="section-block">
           <Reveal className="section-heading">
             <h2>What it does</h2>
-            <p>Six core capabilities, fully integrated.</p>
+            <p>Six core capabilities, fully integrated into a single workflow.</p>
           </Reveal>
 
           <div className="card-grid feature-grid">
             {product.features.map((feature, index) => (
               <Reveal key={feature.name} delay={index * 60}>
                 <article className="feature-card">
-                  <div className="product-icon" style={{ background: product.iconBg, color: product.iconColor }}>
-                    <svg fill="none" viewBox="0 0 18 18" stroke="currentColor" strokeWidth="2">
-                      <path d="M9 2L15 9L9 16M3 9H15" />
-                    </svg>
+                  <div className="product-card-top">
+                    <div className="product-icon" style={{ background: product.iconBg, color: product.iconColor }}>
+                      <svg fill="none" viewBox="0 0 18 18" stroke="currentColor" strokeWidth="2">
+                        <path d="M9 2L15 9L9 16M3 9H15" />
+                      </svg>
+                    </div>
+                    <span className="product-chip">Capability</span>
                   </div>
                   <h3>{feature.name}</h3>
                   <p>{feature.desc}</p>
@@ -167,7 +178,7 @@ export default function ProductPage({ product }) {
             {product.steps.map((step, index) => (
               <Reveal key={step} delay={index * 80}>
                 <div className="step-card">
-                  <div className="step-num">Step {index + 1}</div>
+                  <div className="step-num">0{index + 1}</div>
                   <p>{step}</p>
                 </div>
               </Reveal>
@@ -178,15 +189,12 @@ export default function ProductPage({ product }) {
         <section className="metrics-band">
           <Reveal>
             <div className="metrics-grid compact">
-              {product.metrics.map((metric) => {
-                const [value, ...labelParts] = metric.split(" ");
-                return (
-                  <div key={metric} className="metric-item">
-                    <strong>{value}</strong>
-                    <span>{labelParts.join(" ")}</span>
-                  </div>
-                );
-              })}
+              {product.metrics.map((metric) => (
+                <div key={metric} className="metric-item">
+                  <strong>{metric}</strong>
+                  <span>headline metric</span>
+                </div>
+              ))}
             </div>
           </Reveal>
         </section>
