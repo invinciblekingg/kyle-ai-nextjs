@@ -1,29 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import CountUp from "./count-up";
 import DemoModal from "./demo-modal";
 import Navbar from "./navbar";
 import Reveal from "./reveal";
-import {
-  footerLinks,
-  heroSignals,
-  howItWorks,
-  liveActivity,
-  pricingPlans,
-  products,
-  proofStats,
-  suiteMetrics,
-  systemInsights,
-  testimonials,
-} from "../lib/site-data";
+import { footerLinks, howItWorks, liveActivity, pricingPlans, products, proofStats, suiteMetrics, systemInsights, testimonials } from "../lib/site-data";
 
 const heroRotations = [
-  { text: "Autonomous Growth", glow: "linear-gradient(135deg, #4f46e5 0%, #22c55e 100%)" },
-  { text: "Live Optimization", glow: "linear-gradient(135deg, #0f766e 0%, #4f46e5 100%)" },
-  { text: "Real-Time Action", glow: "linear-gradient(135deg, #7c3aed 0%, #0ea5e9 100%)" },
-  { text: "Teamwide Clarity", glow: "linear-gradient(135deg, #22c55e 0%, #7c3aed 100%)" },
+  { text: "Autonomous Growth", glow: "linear-gradient(135deg, #4f46e5 0%, #7c3aed 45%, #22c55e 100%)" },
+  { text: "Compounding Momentum", glow: "linear-gradient(135deg, #0f766e 0%, #4f46e5 55%, #7c3aed 100%)" },
+  { text: "Adaptive Intelligence", glow: "linear-gradient(135deg, #7c3aed 0%, #0ea5e9 55%, #22c55e 100%)" },
+  { text: "Revenue Velocity", glow: "linear-gradient(135deg, #22c55e 0%, #4f46e5 45%, #7c3aed 100%)" },
 ];
 
 function RotatingHeroText() {
@@ -41,11 +30,9 @@ function RotatingHeroText() {
 
   return (
     <span className="hero-rotator" aria-live="polite">
-      <span className="hero-rotator-kicker">for</span>
-      <span className="hero-rotator-word" style={{ "--hero-glow": current.glow }}>
+      <span key={current.text} className="hero-rotator-word" style={{ "--hero-glow": current.glow }}>
         {current.text}
       </span>
-      <span className="hero-rotator-note">updates every second</span>
     </span>
   );
 }
@@ -160,68 +147,74 @@ function LiveActivityStrip() {
   );
 }
 
-function HeroVisual() {
+function HeroFlowChart() {
+  const flowNodes = [
+    { id: "growthlab", title: "GrowthLab", detail: "Constraints-aware planning", tone: "violet", x: "50%", y: "6%" },
+    { id: "creative", title: "Creative Studio", detail: "Competitive signals in", tone: "rose", x: "83%", y: "18%" },
+    { id: "project", title: "Project Manager", detail: "Role-based approvals", tone: "slate", x: "84%", y: "58%" },
+    { id: "rise", title: "RISE", detail: "Board-ready reporting", tone: "purple", x: "60%", y: "90%" },
+    { id: "circle", title: "Circle", detail: "Deterministic matching", tone: "cyan", x: "34%", y: "90%" },
+    { id: "seo", title: "AI-SEO", detail: "Brief-less content", tone: "amber", x: "9%", y: "58%" },
+    { id: "analytics", title: "Analytics", detail: "Live anomalies", tone: "blue", x: "10%", y: "18%" },
+  ];
+
   return (
-    <div className="hero-visual">
-      <div className="visual-grid" />
-      <div className="visual-orb visual-orb-a" />
-      <div className="visual-orb visual-orb-b" />
-      <div className="visual-card system-card">
-        <div className="visual-card-header">
-          <div>
-            <span className="section-kicker">System in motion</span>
-            <strong>Data is flowing across the operating layer</strong>
-          </div>
-          <span className="status-pill">Live</span>
-        </div>
+    <div className="hero-flow-chart">
+      <div className="hero-flow-grid" />
+      <svg className="hero-flow-svg" viewBox="0 0 1000 620" preserveAspectRatio="none" aria-hidden="true">
+        <g className="hero-flow-svg-lines">
+          <line x1="500" y1="310" x2="500" y2="58" />
+          <line x1="500" y1="310" x2="830" y2="118" />
+          <line x1="500" y1="310" x2="860" y2="372" />
+          <line x1="500" y1="310" x2="670" y2="552" />
+          <line x1="500" y1="310" x2="330" y2="552" />
+          <line x1="500" y1="310" x2="150" y2="372" />
+          <line x1="500" y1="310" x2="145" y2="132" />
+        </g>
+      </svg>
 
-        <div className="system-flow">
-          <div className="flow-node">
-            <span>01</span>
-            <strong>Sources</strong>
-            <p>38 connected inputs</p>
-          </div>
-          <div className="flow-line" />
-          <div className="flow-node active">
-            <span>02</span>
-            <strong>AI Layer</strong>
-            <p>Recommendations updating</p>
-          </div>
-          <div className="flow-line" />
-          <div className="flow-node">
-            <span>03</span>
-            <strong>Actions</strong>
-            <p>14 optimizations queued</p>
-          </div>
-        </div>
+      <div className="hero-flow-center">
+        <span className="hero-flow-badge">KYLE.AI</span>
+        <div className="hero-flow-orb">OS</div>
+        <strong>Autonomous Growth Core</strong>
+        <p>Signals in. Decisions out. Every module learns from the others.</p>
+      </div>
 
-        <div className="insight-stack">
-          <div className="insight-panel accent">
-            <strong>AI suggestion</strong>
-            <p>Optimize Route B for 12% efficiency and reduce idle time by 18 minutes.</p>
-          </div>
-          <div className="insight-panel">
-            <strong>Routing state</strong>
-            <p>Live handoff complete. The board and workflow views are synced.</p>
-          </div>
-        </div>
+      {flowNodes.map((node) => (
+        <article
+          key={node.id}
+          className={`hero-flow-node tone-${node.tone}`}
+          style={{ left: node.x, top: node.y }}
+        >
+          <span>{node.title}</span>
+          <strong>{node.detail}</strong>
+        </article>
+      ))}
 
-        <div className="hero-signal-grid">
-          {heroSignals.map((signal) => (
-            <div key={signal.label} className="signal-card">
-              <span>{signal.label}</span>
-              <strong>{signal.value}</strong>
-            </div>
+      <aside className="hero-flow-insight hero-flow-insight-left">
+        <div className="hero-flow-insight-title">Live shifts</div>
+        <strong>$180k &rarr; Search</strong>
+        <p>Budget move approved</p>
+        <p>Creative fatigue detected on Meta UK</p>
+        <p>83% confidence for next 13 weeks</p>
+      </aside>
+
+      <aside className="hero-flow-insight hero-flow-insight-card">
+        <div className="hero-flow-insight-title">GrowthLab</div>
+        <strong>+18.4%</strong>
+        <span>ROAS delta</span>
+        <div className="hero-flow-mini-chart">
+          {[24, 38, 34, 46, 58, 62, 74].map((value, index) => (
+            <span key={value} style={{ height: `${value}%`, animationDelay: `${index * 90}ms` }} />
           ))}
         </div>
-      </div>
+      </aside>
     </div>
   );
 }
 
 export default function LandingPage() {
   const [demoOpen, setDemoOpen] = useState(false);
-  const heroBars = useMemo(() => [42, 58, 54, 68, 64, 79, 86, 74, 92, 84, 70, 90], []);
 
   return (
     <>
@@ -230,34 +223,31 @@ export default function LandingPage() {
 
       <main className="page-shell">
         <section className="hero">
-          <div className="hero-grid">
-            <Reveal className="hero-copy">
-              <div className="eyebrow badge">Live AI command center</div>
+          <div className="hero-centered">
+            <Reveal className="hero-copy hero-copy-centered">
+              <div className="eyebrow badge">New: AI-powered report co-pilot</div>
               <h1>
-                <span className="hero-heading-intro">The Operating System for</span>
-                <RotatingHeroText />
+                <span className="hero-heading-intro">The Operating System</span>
+                <span className="hero-heading-sub">
+                  for <RotatingHeroText />
+                </span>
               </h1>
               <p className="hero-text">
-                Unify data, predict what matters, and act faster than the manual handoff ever could. Kyle.ai turns
-                every signal into a visual, living system that feels premium on desktop and effortless on mobile.
+                Unify data. Predict what converts. Execute with AI. Kyle.ai is a single, cohesive operating system
+                where every module works in concert and insights from one area automatically inform actions in
+                another.
               </p>
-              <div className="hero-actions">
+              <div className="hero-actions hero-actions-centered">
                 <button type="button" className="primary-button" onClick={() => setDemoOpen(true)}>
                   Get Started Free
                 </button>
                 <a className="secondary-button" href="#suite">
-                  Explore Platform
+                  Watch Demo
                 </a>
               </div>
-              <p className="micro-note">No credit card required. Free 14-day trial.</p>
+              <p className="micro-note hero-micro-note">No credit card required / Free 14-day trial</p>
 
-              <ul className="ribbon">
-                <li>Cross-channel attribution</li>
-                <li>AI recommendations</li>
-                <li>Auto-generated board packs</li>
-              </ul>
-
-              <ul className="hero-metrics">
+              <ul className="hero-metrics hero-metrics-centered">
                 <li>
                   <strong>
                     <CountUp value={4.72} suffix="x" decimals={2} />
@@ -284,11 +274,11 @@ export default function LandingPage() {
                 </li>
               </ul>
             </Reveal>
-
-            <Reveal className="hero-panel" delay={80}>
-              <HeroVisual />
-            </Reveal>
           </div>
+
+          <Reveal className="hero-flow-wrap" delay={80}>
+            <HeroFlowChart />
+          </Reveal>
         </section>
 
         <LiveActivityStrip />
