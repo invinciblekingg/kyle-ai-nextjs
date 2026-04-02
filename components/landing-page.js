@@ -1,69 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import CountUp from "./count-up";
+import { useState } from "react";
 import DemoModal from "./demo-modal";
 import Navbar from "./navbar";
 import Reveal from "./reveal";
 import { footerLinks, howItWorks, liveActivity, pricingPlans, products, proofStats, suiteMetrics, systemInsights, testimonials } from "../lib/site-data";
-
-const heroRotations = [
-  { text: "Autonomous Growth", glow: "linear-gradient(135deg, #4f46e5 0%, #7c3aed 45%, #22c55e 100%)" },
-  { text: "Compounding Momentum", glow: "linear-gradient(135deg, #0f766e 0%, #4f46e5 55%, #7c3aed 100%)" },
-  { text: "Adaptive Intelligence", glow: "linear-gradient(135deg, #7c3aed 0%, #0ea5e9 55%, #22c55e 100%)" },
-  { text: "Revenue Velocity", glow: "linear-gradient(135deg, #22c55e 0%, #4f46e5 45%, #7c3aed 100%)" },
-];
-
-function RotatingHeroText() {
-  const [index, setIndex] = useState(0);
-  const wordRef = useRef(null);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setIndex((current) => (current + 1) % heroRotations.length);
-    }, 1000);
-
-    return () => window.clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const element = wordRef.current;
-
-    if (!element) {
-      return;
-    }
-
-    gsap.fromTo(
-      element,
-      {
-        y: 18,
-        opacity: 0,
-        scale: 0.98,
-        filter: "blur(10px)",
-      },
-      {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        filter: "blur(0px)",
-        duration: 0.85,
-        ease: "power3.out",
-      }
-    );
-  }, [index]);
-
-  const current = heroRotations[index];
-
-  return (
-    <span className="hero-rotator" aria-live="polite">
-      <span ref={wordRef} className="hero-rotator-word" style={{ "--hero-glow": current.glow }}>
-        {current.text}
-      </span>
-    </span>
-  );
-}
 
 function Icon({ name }) {
   if (name === "analytics") {
@@ -190,9 +132,7 @@ export default function LandingPage() {
               <div className="eyebrow badge">New: AI-powered report co-pilot</div>
               <h1>
                 <span className="hero-heading-intro">The Operating System</span>
-                <span className="hero-heading-sub">
-                  for <RotatingHeroText />
-                </span>
+                <span className="hero-heading-sub">for Autonomous Growth</span>
               </h1>
               <p className="hero-text">
                 Unify data. Predict what converts. Execute with AI. Kyle.ai is a single, cohesive operating system
@@ -208,33 +148,6 @@ export default function LandingPage() {
                 </a>
               </div>
               <p className="micro-note hero-micro-note">No credit card required / Free 14-day trial</p>
-
-              <ul className="hero-metrics hero-metrics-centered">
-                <li>
-                  <strong>
-                    <CountUp value={4.72} suffix="x" decimals={2} />
-                  </strong>
-                  <span>Blended ROAS</span>
-                </li>
-                <li>
-                  <strong>
-                    <CountUp value={284} prefix="$" suffix="K" />
-                  </strong>
-                  <span>Ad spend on track</span>
-                </li>
-                <li>
-                  <strong>
-                    <CountUp value={72} suffix="%" />
-                  </strong>
-                  <span>Identity match rate</span>
-                </li>
-                <li>
-                  <strong>
-                    <CountUp value={2} />
-                  </strong>
-                  <span>Review-needed anomalies</span>
-                </li>
-              </ul>
             </Reveal>
           </div>
         </section>

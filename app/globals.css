@@ -490,16 +490,6 @@ img {
   box-shadow: var(--shadow-soft);
 }
 
-.hero-metrics {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  list-style: none;
-  padding: 0;
-  margin: 34px 0 0;
-}
-
-.hero-metrics li,
 .proof-item,
 .pricing-card,
 .testimonial-card,
@@ -514,18 +504,6 @@ img {
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.94);
   box-shadow: var(--shadow);
-}
-
-.hero-metrics li {
-  padding: 18px;
-  border-radius: 24px;
-}
-
-.hero-metrics strong {
-  display: block;
-  margin-bottom: 6px;
-  font-family: var(--font-display), sans-serif;
-  font-size: 1.9rem;
 }
 
 .hero-centered {
@@ -545,18 +523,12 @@ img {
 }
 
 .hero-heading-sub {
-  display: inline-flex;
-  flex-wrap: nowrap;
-  align-items: baseline;
+  display: block;
   margin-top: 10px;
-  gap: 10px;
 }
 
 .hero-rotator {
-  display: inline-flex;
-  align-items: baseline;
-  margin-left: 10px;
-  white-space: nowrap;
+  display: none;
 }
 
 .hero-text {
@@ -574,12 +546,6 @@ img {
   text-transform: uppercase;
   letter-spacing: 0.22em;
   font-size: 0.75rem;
-}
-
-.hero-metrics-centered {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 920px;
 }
 
 .hero-panel {
@@ -1312,15 +1278,6 @@ img {
   .hero-copy h1,
   .product-hero h1 {
     font-size: clamp(2.5rem, 14vw, 4rem);
-  }
-
-  .hero-rotator {
-    gap: 6px;
-    margin-top: 8px;
-  }
-
-  .hero-rotator-word {
-    line-height: 1;
   }
 
   .hero-actions,
