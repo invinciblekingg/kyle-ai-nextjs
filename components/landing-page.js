@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import CountUp from "./count-up";
 import DemoModal from "./demo-modal";
 import Navbar from "./navbar";
@@ -18,6 +18,37 @@ import {
   systemInsights,
   testimonials,
 } from "../lib/site-data";
+
+const heroRotations = [
+  { text: "Autonomous Growth", glow: "linear-gradient(135deg, #4f46e5 0%, #22c55e 100%)" },
+  { text: "Live Optimization", glow: "linear-gradient(135deg, #0f766e 0%, #4f46e5 100%)" },
+  { text: "Real-Time Action", glow: "linear-gradient(135deg, #7c3aed 0%, #0ea5e9 100%)" },
+  { text: "Teamwide Clarity", glow: "linear-gradient(135deg, #22c55e 0%, #7c3aed 100%)" },
+];
+
+function RotatingHeroText() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setIndex((current) => (current + 1) % heroRotations.length);
+    }, 1000);
+
+    return () => window.clearInterval(interval);
+  }, []);
+
+  const current = heroRotations[index];
+
+  return (
+    <span className="hero-rotator" aria-live="polite">
+      <span className="hero-rotator-kicker">for</span>
+      <span className="hero-rotator-word" style={{ "--hero-glow": current.glow }}>
+        {current.text}
+      </span>
+      <span className="hero-rotator-note">updates every second</span>
+    </span>
+  );
+}
 
 function Icon({ name }) {
   if (name === "analytics") {
@@ -201,14 +232,14 @@ export default function LandingPage() {
         <section className="hero">
           <div className="hero-grid">
             <Reveal className="hero-copy">
-              <div className="eyebrow badge">New: AI-powered report co-pilot</div>
+              <div className="eyebrow badge">Live AI command center</div>
               <h1>
-                The Operating System for
-                <span className="accent-text"> Autonomous Growth</span>
+                <span className="hero-heading-intro">The Operating System for</span>
+                <RotatingHeroText />
               </h1>
               <p className="hero-text">
-                Unify data. Predict what converts. Execute with AI. Kyle.ai is a single operating system where every
-                module works in concert, so signals become actions without the usual manual handoff.
+                Unify data, predict what matters, and act faster than the manual handoff ever could. Kyle.ai turns
+                every signal into a visual, living system that feels premium on desktop and effortless on mobile.
               </p>
               <div className="hero-actions">
                 <button type="button" className="primary-button" onClick={() => setDemoOpen(true)}>

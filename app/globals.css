@@ -389,12 +389,56 @@ img {
   letter-spacing: -0.05em;
 }
 
+.hero-heading-intro {
+  display: block;
+}
+
 .accent-text {
   display: inline-block;
   background: linear-gradient(135deg, #4f46e5, #7c3aed 52%, #0f766e);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.hero-rotator {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.hero-rotator-kicker,
+.hero-rotator-note {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.hero-rotator-kicker {
+  color: var(--accent-3);
+}
+
+.hero-rotator-word {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.08em 0.2em 0.14em;
+  border-radius: 0.35em;
+  background: var(--hero-glow);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 18px rgba(79, 70, 229, 0.2), 0 0 48px rgba(34, 197, 94, 0.08);
+  animation: hero-glow 2.4s ease-in-out infinite;
+}
+
+.hero-rotator-note {
+  color: rgba(79, 70, 229, 0.72);
+  animation: note-pulse 2.4s ease-in-out infinite;
 }
 
 .hero-text {
@@ -1219,6 +1263,30 @@ img {
   }
 }
 
+@keyframes hero-glow {
+  0%,
+  100% {
+    filter: brightness(1);
+    transform: translateY(0);
+  }
+
+  50% {
+    filter: brightness(1.14);
+    transform: translateY(-1px);
+  }
+}
+
+@keyframes note-pulse {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
 @keyframes flow {
   0% {
     transform: translateX(-80%);
@@ -1347,6 +1415,15 @@ img {
     font-size: clamp(2.5rem, 14vw, 4rem);
   }
 
+  .hero-rotator {
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .hero-rotator-word {
+    line-height: 1;
+  }
+
   .hero-actions,
   .cta-actions,
   .modal-actions {
@@ -1370,5 +1447,17 @@ img {
   .activity-strip-label {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .hero-text {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-rotator-word,
+  .hero-rotator-note {
+    animation: none;
   }
 }
